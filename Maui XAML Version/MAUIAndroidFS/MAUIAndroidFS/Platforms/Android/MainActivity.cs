@@ -23,6 +23,12 @@ public class MainActivity : MauiAppCompatActivity
         StartService(serviceIntent);
     }
 
+    // Prueba. Pongo override de OnActivityResult para ver en qué momento se lanza y qué devuelve en requestCode
+    protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+    {
+        base.OnActivityResult(requestCode, resultCode, data);
+    }
+
     public void StopService()
     {
         var serviceIntent = new Intent(this, typeof(MyBackgroundService));

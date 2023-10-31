@@ -54,41 +54,45 @@ internal class MyBackgroundService : Service
 
     async Task EnsureHubConnection()
     {
-        if (hubConnection == null)
-        {
-            hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://[YOUR-AZURE-SERVER-NAME].azurewebsites.net/BroadcastHub")
-                .Build();
+        // Así parece que se lanza una actividad
+        //Microsoft.Maui.ApplicationModel.Platform.CurrentActivity.StartActivityForResult(notificationIntent, 1);
 
-            hubConnection.On<string>("ReceiveMessage", (message) =>
-            {
-                // Display the message in a notification
-                BadgeNumber++;
-                notification.SetNumber(BadgeNumber);
-                notification.SetContentTitle(message);
-                StartForeground(myId, notification.Build());
-            });
-            try
-            {
-                await hubConnection.StartAsync();
-            }
-            catch (Exception e)
-            {
-                // Put a breakpoint on the next line to debug
-            }
+        // Lo comento para pruebas
+        //if (hubConnection == null)
+        //{
+        //    hubConnection = new HubConnectionBuilder()
+        //        .WithUrl("https://[YOUR-AZURE-SERVER-NAME].azurewebsites.net/BroadcastHub")
+        //        .Build();
 
-        }
-        else if (hubConnection.State != HubConnectionState.Connected)
-        {
-            try
-            {
-                await hubConnection.StartAsync();
-            }
-            catch (Exception e)
-            {
-                // Put a breakpoint on the next line to debug
-            }
-        }
+        //    hubConnection.On<string>("ReceiveMessage", (message) =>
+        //    {
+        //        // Display the message in a notification
+        //        BadgeNumber++;
+        //        notification.SetNumber(BadgeNumber);
+        //        notification.SetContentTitle(message);
+        //        StartForeground(myId, notification.Build());
+        //    });
+        //    try
+        //    {
+        //        await hubConnection.StartAsync();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        // Put a breakpoint on the next line to debug
+        //    }
+
+        //}
+        //else if (hubConnection.State != HubConnectionState.Connected)
+        //{
+        //    try
+        //    {
+        //        await hubConnection.StartAsync();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        // Put a breakpoint on the next line to debug
+        //    }
+        //}
     }
 
     /// <summary>

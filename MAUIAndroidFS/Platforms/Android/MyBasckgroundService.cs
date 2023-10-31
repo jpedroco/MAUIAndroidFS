@@ -54,6 +54,9 @@ internal class MyBackgroundService : Service
 
     async Task EnsureHubConnection()
     {
+        // Así parece que se lanza una actividad
+        //Microsoft.Maui.ApplicationModel.Platform.CurrentActivity.StartActivityForResult(notificationIntent, 1);
+
         // Para pruebas de momento no hago nada
         //if (hubConnection == null)
         //{

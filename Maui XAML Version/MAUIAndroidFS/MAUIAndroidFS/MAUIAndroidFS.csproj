@@ -53,4 +53,10 @@
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.5" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Reference Include="ClasesGenerales">
+	    <HintPath>..\..\..\..\DataAcessBase\ClasesGenerales\bin\Release\netstandard2.0\ClasesGenerales.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
 </Project>

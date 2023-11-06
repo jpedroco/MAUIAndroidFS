@@ -20,4 +20,6 @@ public static class AndroidServiceManager
         MainActivity.StopService();
         IsRunning = false;
     }
+
+
 }

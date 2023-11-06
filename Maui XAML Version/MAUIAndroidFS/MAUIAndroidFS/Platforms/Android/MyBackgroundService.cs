@@ -15,6 +15,8 @@ internal class MyBackgroundService : Service
     NotificationCompat.Builder notification;
     HubConnection hubConnection;
 
+    public Action Accion { get; set; }
+
     public override IBinder OnBind(Intent intent)
     {
         return null;
@@ -45,7 +47,8 @@ internal class MyBackgroundService : Service
         StartForeground(myId, notification.Build());
 
         // timer to ensure hub connection
-        timer = new Timer(Timer_Elapsed, notification, 0, 10000);
+        //timer = new Timer(Timer_Elapsed, notification, 0, 10000);
+        timer = new Timer(Timer_Elapsed, notification, 0, 5000);
 
         // You can stop the service from inside the service by calling StopSelf();
 
@@ -104,5 +107,25 @@ internal class MyBackgroundService : Service
         AndroidServiceManager.IsRunning = true;
 
         await EnsureHubConnection();
+
+        MiUdp.Envia($"Servicio funcionando: {DateTime.Now.ToString("HH:mm:ss")}");
+
+        try
+        {
+            Accion?.Invoke();
+        }
+        catch (Exception ex)
+        {
+            MiUdp.Envia($"Excepción Accion: {ex.Message}");
+        }
+    }
+
+    public void EnlazaAccion(Action action)
+    {
+        Accion = action;
+    }
+    public void DesenlazaAccion()
+    {
+        Accion = null;
     }
 }

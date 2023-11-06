@@ -6,6 +6,7 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
         this.Loaded += MainPage_Loaded;
+        this.Unloaded += MainPage_Unloaded;
 	}
 
     private void MainPage_Loaded(object sender, EventArgs e)
@@ -22,6 +23,13 @@ public partial class MainPage : ContentPage
 #endif
     }
 
+    private void MainPage_Unloaded(object sender, EventArgs e)
+    {
+#if ANDROID
+        
+#endif
+    }
+
     private void StopButton_Clicked(object sender, EventArgs e)
     {
 #if ANDROID
@@ -29,5 +37,12 @@ public partial class MainPage : ContentPage
         MessageLabel.Text = "Service is stopped";
 #endif
     }
+
+    private void Evento()
+    {
+        MiUdp.Envia("Activada página principal");
+    }
+
+    
 }
 

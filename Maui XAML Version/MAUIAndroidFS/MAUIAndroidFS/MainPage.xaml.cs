@@ -2,16 +2,20 @@
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
-	{
-		InitializeComponent();
+    public MainPage()
+    {
+        InitializeComponent();
         this.Loaded += MainPage_Loaded;
         this.Unloaded += MainPage_Unloaded;
-	}
+    }
 
     private void MainPage_Loaded(object sender, EventArgs e)
     {
 #if ANDROID
+        // Mio
+        MAUIAndroidFS.Platforms.Android.AndroidServiceManager.AsignaAccion(Evento);
+        // Fin mio
+
         if (!MAUIAndroidFS.Platforms.Android.AndroidServiceManager.IsRunning)
         {
             MAUIAndroidFS.Platforms.Android.AndroidServiceManager.StartMyService();
@@ -23,12 +27,14 @@ public partial class MainPage : ContentPage
 #endif
     }
 
+    // Mio
     private void MainPage_Unloaded(object sender, EventArgs e)
     {
 #if ANDROID
-        
+        MAUIAndroidFS.Platforms.Android.AndroidServiceManager.DesasignaAccion();
 #endif
     }
+    // Fin mio
 
     private void StopButton_Clicked(object sender, EventArgs e)
     {
@@ -43,6 +49,6 @@ public partial class MainPage : ContentPage
         MiUdp.Envia("Activada página principal");
     }
 
-    
+
 }
 

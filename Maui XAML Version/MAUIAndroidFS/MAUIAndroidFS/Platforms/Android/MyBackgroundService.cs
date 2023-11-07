@@ -15,7 +15,6 @@ internal class MyBackgroundService : Service
     NotificationCompat.Builder notification;
     HubConnection hubConnection;
 
-    public Action Accion { get; set; }
 
     public override IBinder OnBind(Intent intent)
     {
@@ -108,24 +107,19 @@ internal class MyBackgroundService : Service
 
         await EnsureHubConnection();
 
+        // Mio
         MiUdp.Envia($"Servicio funcionando: {DateTime.Now.ToString("HH:mm:ss")}");
 
         try
         {
-            Accion?.Invoke();
+             AndroidServiceManager.EjecutaAccion();
         }
         catch (Exception ex)
         {
             MiUdp.Envia($"Excepción Accion: {ex.Message}");
         }
+        // Fin mio
     }
 
-    public void EnlazaAccion(Action action)
-    {
-        Accion = action;
-    }
-    public void DesenlazaAccion()
-    {
-        Accion = null;
-    }
+    
 }

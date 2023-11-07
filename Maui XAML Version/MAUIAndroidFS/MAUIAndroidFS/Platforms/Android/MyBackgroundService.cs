@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using AndroidX.Core.App;
+using ClasesGenerales;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace MAUIAndroidFS.Platforms.Android;
@@ -15,7 +16,7 @@ internal class MyBackgroundService : Service
     NotificationCompat.Builder notification;
     HubConnection hubConnection;
 
-
+    UdpCommunication PuertoEscucha;
     public override IBinder OnBind(Intent intent)
     {
         return null;
@@ -49,10 +50,55 @@ internal class MyBackgroundService : Service
         //timer = new Timer(Timer_Elapsed, notification, 0, 10000);
         timer = new Timer(Timer_Elapsed, notification, 0, 5000);
 
+
+        // Mio
+        PuertoEscucha = new UdpCommunication(9396);
+        PuertoEscucha.RecibidosDatos += RecibidaComunicacion;
+        // Fin mio
+
         // You can stop the service from inside the service by calling StopSelf();
 
         return StartCommandResult.Sticky;
     }
+
+    // Mio
+    int contador = 0;
+    protected void RecibidaComunicacion(string ip, string datos)
+    {
+        MiUdp.Envia("RecibidaComunicacion()");
+        try
+        {
+            //MainThread.BeginInvokeOnMainThread(() =>
+            //{
+                try
+                {
+                    MiUdp.Envia($"HasWindowFocus: {Microsoft.Maui.ApplicationModel.Platform.CurrentActivity.HasWindowFocus}");
+                //var notificationIntent = new Intent(this, typeof(MainActivity));
+                //Microsoft.Maui.ApplicationModel.Platform.CurrentActivity.StartActivityForResult(notificationIntent, 1);
+
+                Intent main2 = new Intent(ApplicationContext, typeof(MainActivity));
+                //Intent main2 = new Intent(this, typeof(MainActivity));
+                //main2.SetFlags(ActivityFlags.SingleTop );
+                main2.SetFlags( ActivityFlags.NewTask);
+                    StartActivity(main2);
+
+                    /*
+Java.Lang.IllegalStateException
+  Message=View with id -1: crc640ec207abc449b2ca.ShellPageContainer#onMeasure() did not set the measured dimension by calling setMeasuredDimension()                     */
+                }
+                catch (Exception ex)
+                {
+                    MiUdp.Envia(ex.ToString());
+                }
+            //});
+        }
+        catch (Exception ex)
+        {
+            MiUdp.Envia(ex.ToString());
+        }
+    }
+    // Fin mio
+
 
     async Task EnsureHubConnection()
     {
@@ -108,18 +154,25 @@ internal class MyBackgroundService : Service
         await EnsureHubConnection();
 
         // Mio
+        contador++;
+        if (contador == 5)
+        {
+            RecibidaComunicacion("", "");
+        }
+
         MiUdp.Envia($"Servicio funcionando: {DateTime.Now.ToString("HH:mm:ss")}");
 
         try
         {
-             AndroidServiceManager.EjecutaAccion();
+            AndroidServiceManager.EjecutaAccion();
         }
         catch (Exception ex)
         {
             MiUdp.Envia($"Excepción Accion: {ex.Message}");
         }
+
         // Fin mio
     }
 
-    
+
 }

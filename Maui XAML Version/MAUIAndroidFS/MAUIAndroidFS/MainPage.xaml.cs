@@ -13,6 +13,7 @@ public partial class MainPage : ContentPage
     {
 #if ANDROID
         // Mio
+        MiUdp.Envia("Loaded");
         MAUIAndroidFS.Platforms.Android.AndroidServiceManager.AsignaAccion(Evento);
         // Fin mio
 
@@ -30,6 +31,7 @@ public partial class MainPage : ContentPage
     // Mio
     private void MainPage_Unloaded(object sender, EventArgs e)
     {
+        MiUdp.Envia("Unloaded");
 #if ANDROID
         MAUIAndroidFS.Platforms.Android.AndroidServiceManager.DesasignaAccion();
 #endif

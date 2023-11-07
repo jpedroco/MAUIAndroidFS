@@ -11,7 +11,7 @@ namespace MAUIAndroidFS
     {
         public static void Envia(string mensaje)
         {
-            UdpCommunication.Envia("192.168.1.11", 9394, mensaje);
+            UdpCommunication.Envia("192.168.0.171", 9394, mensaje);
         }
     }
 }

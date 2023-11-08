@@ -5,10 +5,15 @@ using MAUIAndroidFS.Platforms.Android;
 
 namespace MAUIAndroidFS;
 
+//[Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true,
+//    ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation
+//    | ConfigChanges.UiMode | ConfigChanges.ScreenLayout
+//    | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
 [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true,
     ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation
     | ConfigChanges.UiMode | ConfigChanges.ScreenLayout
-    | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+    | ConfigChanges.SmallestScreenSize | ConfigChanges.Density,
+    LaunchMode = LaunchMode.SingleTop)]
 public class MainActivity : MauiAppCompatActivity
 {
     public MainActivity()
